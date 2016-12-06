@@ -81,7 +81,8 @@ public class test4Test {
     n.render(context);
     BoundSql boundSql = context.getBoundSql();
     assertThat(boundSql.getSql().toString(), equalTo("select where 1=1"));
-    assertThat(boundSql.getArgs(), contains(new Object[]{50}));
+    assertThat(boundSql.getArgs().size(), equalTo(0));
+
   }
 
   @Test
