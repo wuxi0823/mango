@@ -1,4 +1,3 @@
-
 package org.jfaster.mango.stat;
 
 import org.jfaster.mango.util.jdbc.OperatorType;
@@ -10,9 +9,6 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-/**
- * @author ash
- */
 public class Test1 {
   
   @Test
@@ -30,7 +26,7 @@ public class Test1 {
     metaStat.setCacheNullObject(true);
 
     InitStat initStat = stat.getInitStat();
-    initStat.recordInit(1000);
+    initStat.recordInit(500);
 
     ExecuteStat executeStat = stat.getExecuteStat();
     OneExecuteStat oneExecuteStat = OneExecuteStat.create();
@@ -45,11 +41,11 @@ public class Test1 {
     oneExecuteStat.recordCacheSetSuccess(10);
     oneExecuteStat.recordCacheSetException(11);
     oneExecuteStat.recordCacheAddSuccess(12);
-    oneExecuteStat.recordCacheAddException(13);
-    oneExecuteStat.recordCacheDeleteSuccess(14);
-    oneExecuteStat.recordCacheDeleteException(15);
-    oneExecuteStat.recordCacheBatchDeleteSuccess(16);
-    oneExecuteStat.recordCacheBatchDeleteException(17);
+    // oneExecuteStat.recordCacheAddException(13);
+    // oneExecuteStat.recordCacheDeleteSuccess(14);
+    // oneExecuteStat.recordCacheDeleteException(15);
+    // oneExecuteStat.recordCacheBatchDeleteSuccess(16);
+    // oneExecuteStat.recordCacheBatchDeleteException(17);
     executeStat.accumulate(oneExecuteStat);
 
     OperatorStat operatorStat = stat.toOperatorStat();
@@ -59,7 +55,7 @@ public class Test1 {
     assertThat(operatorStat.isUseMultipleKeys(), equalTo(true));
     assertThat(operatorStat.isCacheNullObject(), equalTo(true));
     assertThat(operatorStat.getInitCount(), equalTo(1L));
-    assertThat(operatorStat.getTotalInitTime(), equalTo(1000L));
+    assertThat(operatorStat.getTotalInitTime(), equalTo(500L));
     assertThat(operatorStat.getDatabaseExecuteSuccessCount(), equalTo(1L));
     assertThat(operatorStat.getDatabaseExecuteExceptionCount(), equalTo(1L));
     assertThat(operatorStat.getTotalDatabaseExecuteTime(), equalTo(5L));
@@ -86,4 +82,3 @@ public class Test1 {
   }
   
 }
-
