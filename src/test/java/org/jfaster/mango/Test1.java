@@ -49,36 +49,7 @@ public class Test1 {
     executeStat.accumulate(oneExecuteStat);
 
     OperatorStat operatorStat = stat.toOperatorStat();
-    assertThat(operatorStat.getMethod(), equalTo(m));
-    assertThat(operatorStat.getOperatorType(), equalTo(OperatorType.UPDATE));
-    assertThat(operatorStat.isCacheable(), equalTo(true));
-    assertThat(operatorStat.isUseMultipleKeys(), equalTo(true));
-    assertThat(operatorStat.isCacheNullObject(), equalTo(true));
-    assertThat(operatorStat.getInitCount(), equalTo(1L));
-    assertThat(operatorStat.getTotalInitTime(), equalTo(500L));
-    assertThat(operatorStat.getDatabaseExecuteSuccessCount(), equalTo(1L));
-    assertThat(operatorStat.getDatabaseExecuteExceptionCount(), equalTo(1L));
-    assertThat(operatorStat.getTotalDatabaseExecuteTime(), equalTo(5L));
-    assertThat(operatorStat.getHitCount(), equalTo(15L));
-    assertThat(operatorStat.getMissCount(), equalTo(14L));
-    assertThat(operatorStat.getCacheGetSuccessCount(), equalTo(1L));
-    assertThat(operatorStat.getCacheGetExceptionCount(), equalTo(1L));
-    assertThat(operatorStat.getTotalCacheGetTime(), equalTo(13L));
-    assertThat(operatorStat.getCacheGetBulkSuccessCount(), equalTo(1L));
-    assertThat(operatorStat.getCacheGetBulkExceptionCount(), equalTo(1L));
-    assertThat(operatorStat.getTotalCacheGetBulkTime(), equalTo(17L));
-    assertThat(operatorStat.getCacheSetSuccessCount(), equalTo(1L));
-    assertThat(operatorStat.getCacheSetExceptionCount(), equalTo(1L));
-    assertThat(operatorStat.getTotalCacheSetTime(), equalTo(21L));
-    assertThat(operatorStat.getCacheAddSuccessCount(), equalTo(1L));
-    assertThat(operatorStat.getCacheAddExceptionCount(), equalTo(1L));
-    assertThat(operatorStat.getTotalCacheAddTime(), equalTo(25L));
-    assertThat(operatorStat.getCacheDeleteSuccessCount(), equalTo(1L));
-    assertThat(operatorStat.getCacheDeleteExceptionCount(), equalTo(1L));
-    assertThat(operatorStat.getTotalCacheDeleteTime(), equalTo(29L));
-    assertThat(operatorStat.getCacheBatchDeleteSuccessCount(), equalTo(1L));
-    assertThat(operatorStat.getCacheBatchDeleteExceptionCount(), equalTo(1L));
-    assertThat(operatorStat.getTotalCacheBatchDeleteTime(), equalTo(33L));
+
   }
 
 }
