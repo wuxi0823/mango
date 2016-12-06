@@ -13,7 +13,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * @author ash
  */
-public class CombinedStatTest {
+public class Test1 {
   
   @Test
   public void test() throws Exception {
