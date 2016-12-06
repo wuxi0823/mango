@@ -50,11 +50,11 @@ public class test4Test {
     ParameterContext ctx = getParameterContext(Lists.newArrayList((Type) Integer.class));
     n.checkAndBind(ctx);
     InvocationContext context = DefaultInvocationContext.create();
-    context.addParameter("1", 100);
+    context.addParameter("1", 30);
     n.render(context);
     BoundSql boundSql = context.getBoundSql();
     assertThat(boundSql.getSql().toString(), equalTo("select where 1=1  and id>? "));
-    assertThat(boundSql.getArgs(), contains(new Object[]{100}));
+    assertThat(boundSql.getArgs(), contains(new Object[]{30}));
   }
 
   @Test
@@ -82,11 +82,11 @@ public class test4Test {
     ParameterContext ctx = getParameterContext(Lists.newArrayList((Type) Integer.class));
     n.checkAndBind(ctx);
     InvocationContext context = DefaultInvocationContext.create();
-    context.addParameter("1", 100);
+    context.addParameter("1", 50);
     n.render(context);
     BoundSql boundSql = context.getBoundSql();
     assertThat(boundSql.getSql().toString(), equalTo("select where 1=1 and id>?"));
-    assertThat(boundSql.getArgs(), contains(new Object[]{100}));
+    assertThat(boundSql.getArgs(), contains(new Object[]{50}));
   }
 
   @Test
@@ -101,11 +101,11 @@ public class test4Test {
     ParameterContext ctx = getParameterContext(Lists.newArrayList((Type) Integer.class));
     n.checkAndBind(ctx);
     InvocationContext context = DefaultInvocationContext.create();
-    context.addParameter("1", -100);
+    context.addParameter("1", -50);
     n.render(context);
     BoundSql boundSql = context.getBoundSql();
     assertThat(boundSql.getSql().toString(), equalTo("select where 1=1 and id<?"));
-    assertThat(boundSql.getArgs(), contains(new Object[]{-100}));
+    assertThat(boundSql.getArgs(), contains(new Object[]{-50}));
   }
 
   @Test
