@@ -29,7 +29,7 @@ import static org.hamcrest.Matchers.hasSize;
  */
 public class parseranalyzeTest {
 
-  @test
+  @Test
   public void testBase1() throws Exception {
     String sql = "select #{:1} from user where id in (:2) and name=:3";
     ASTRootNode n = new Parser(sql).parse().init();
@@ -47,7 +47,7 @@ public class parseranalyzeTest {
     assertThat(boundSql.getArgs(), contains(new Object[]{9, 5, 2, 7, "ash"}));
   }
 
-  @test
+  @Test
   public void testIf1() throws Exception {
     String sql = "select where 1=1 #if(:1) and id>:1 #end";
     ASTRootNode n = new Parser(sql).parse().init();
@@ -61,7 +61,7 @@ public class parseranalyzeTest {
     assertThat(boundSql.getArgs(), contains(new Object[]{100}));
   }
 
-  @test
+  @Test
   public void testIf21() throws Exception {
     String sql = "select where 1=1 #if(!:1) and id>:1 #end";
     ASTRootNode n = new Parser(sql).parse().init();
