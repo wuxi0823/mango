@@ -74,6 +74,7 @@ public class test4Test {
   public void testIfElseIf() throws Exception {
     String sql = "select where 1=1" +
         "#if(:1>0)" +
+         "and id>:1"+
         "#elseif(:1<0)" +
         "#end";
     ASTRootNode n = new Parser(sql).parse().init();
