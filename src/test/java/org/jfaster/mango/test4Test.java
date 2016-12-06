@@ -24,9 +24,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.hasSize;
 
-/**
- * @author ash
- */
 public class test4Test {
 
   public void testBase() throws Exception {
@@ -62,13 +59,13 @@ public class test4Test {
 
   @Test
   public void testIf2() throws Exception {
-    String sql = "select where 2=2 #if(!:2) and id>:2 #end";
-    ASTRootNode n = new Parser(sql).parse().init();
+    String sql = "select where 1=1 #if(!:1) and id>:1 #end";
+    ASTRootNode root = new Parser(sql).parse();
     ParameterContext ctx = getParameterContext(Lists.newArrayList((Type) Integer.class));
-    n.checkAndBind(ctx);
+    root.checkAndBind(ctx);
     InvocationContext context = DefaultInvocationContext.create();
-    context.addParameter("1", 100);
-    n.render(context);
+    context.addParameter("1", 50);
+    root.render(context);
     BoundSql boundSql = context.getBoundSql();
     assertThat(boundSql.getSql().toString(), equalTo("select where 1=1 "));
     assertThat(boundSql.getArgs().size(), equalTo(0));
