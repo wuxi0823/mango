@@ -29,7 +29,6 @@ import static org.hamcrest.Matchers.hasSize;
  */
 public class test4Test {
 
-  @Test
   public void testBase() throws Exception {
     String sql = "select #{:1} from user where id in (:2) and name=:3";
     ASTRootNode n = new Parser(sql).parse().init();
@@ -49,7 +48,7 @@ public class test4Test {
 
   @Test
   public void testIf() throws Exception {
-    String sql = "select where 2=2 #if(:2) and id>:2 #end";
+    String sql = "select where 1=1 #if(:1) and id>:1 #end";
     ASTRootNode n = new Parser(sql).parse().init();
     ParameterContext ctx = getParameterContext(Lists.newArrayList((Type) Integer.class));
     n.checkAndBind(ctx);
@@ -57,13 +56,13 @@ public class test4Test {
     context.addParameter("1", 100);
     n.render(context);
     BoundSql boundSql = context.getBoundSql();
-    assertThat(boundSql.getSql().toString(), equalTo("select where 2=2  and id>? "));
+    assertThat(boundSql.getSql().toString(), equalTo("select where 1=1  and id>? "));
     assertThat(boundSql.getArgs(), contains(new Object[]{100}));
   }
 
   @Test
   public void testIf2() throws Exception {
-    String sql = "select where 1>1 #if(!:1) and id>:1 #end";
+    String sql = "select where 1!=1 #if(!:1) and id>:1 #end";
     ASTRootNode n = new Parser(sql).parse().init();
     ParameterContext ctx = getParameterContext(Lists.newArrayList((Type) Integer.class));
     n.checkAndBind(ctx);
@@ -74,7 +73,6 @@ public class test4Test {
     assertThat(boundSql.getSql().toString(), equalTo("select where 1=1 "));
     assertThat(boundSql.getArgs().size(), equalTo(0));
   }
-
   @Test
   public void testIfElseIf() throws Exception {
     String sql = "select where 1=1" +
