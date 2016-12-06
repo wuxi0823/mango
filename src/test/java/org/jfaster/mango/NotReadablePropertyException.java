@@ -1,89 +1,67 @@
- package org.jfaster.mango.exception;
-
- import org.jfaster.mango.annotation.Cache;
- import org.jfaster.mango.annotation.CacheBy;
- import org.jfaster.mango.annotation.DB;
- import org.jfaster.mango.annotation.SQL;
- import org.jfaster.mango.operator.Mango;
- import org.jfaster.mango.operator.cache.Day;
- import org.jfaster.mango.operator.cache.LocalCacheHandler;
- import org.jfaster.mango.support.DataSourceConfig;
- import org.junit.Rule;
+ package org.jfaster.mango.reflect;
+ 
  import org.junit.Test;
- import org.junit.rules.ExpectedException;
-
- import java.util.ArrayList;
- import java.util.List;
-
+ 
+ import java.io.Serializable;
+ import java.util.*;
+ 
+ import static org.hamcrest.MatcherAssert.assertThat;
+ import static org.hamcrest.Matchers.equalTo;
+ import static org.hamcrest.Matchers.is;
+ 
  /**
-  * 测试{@link NotReadablePropertyException}
-  *
   * @author ash
   */
- public class NotReadablePropertyException {
-
-     private final static Mango mango = Mango.newInstance(DataSourceConfig.getDataSource());
-     static {
-         mango.setDefaultLazyInit(true).setDefaultCacheHandler(new LocalCacheHandler());
-     }
-
-     @Rule
-     public ExpectedException thrown = ExpectedException.none();
-
+ public class TypeTokenTest {
+ 
+     private abstract static class StringList implements List<String> {}
+ 
      @Test
-     public void test2() {
-         thrown.expect(NotReadablePropertyException.class);
-         thrown.expectMessage("property :1.c is not readable, " +
-                 "the type of :1 is class org.jfaster.mango.exception.NotReadablePropertyExceptionTest$A, " +
-                 "please check it's get method");
-         Dao dao = mango.create(Dao.class);
-         dao.add2(new A());
+     public void testGetType() throws Exception {
+         TypeToken<List<String>> token = new TypeToken<List<String>>() {};
+         assertThat(token.getType(), equalTo(StringList.class.getGenericInterfaces()[0]));
+ 
+         TypeToken<String> token2 = new TypeToken<String>() {};
+         assertThat(token2.getType().equals(String.class), is(true));
      }
-
+ 
      @Test
-     public void test3() {
-         thrown.expect(NotReadablePropertyException.class);
-         thrown.expectMessage("if use cache and sql has one in clause, property c of " +
-                 "class org.jfaster.mango.exception.NotReadablePropertyExceptionTest$A " +
-                 "expected readable but not");
-         Dao2 dao = mango.create(Dao2.class);
-         dao.gets(new ArrayList<Integer>());
+     public void testGetRawType() throws Exception {
+         TypeToken<List<String>> token = new TypeToken<List<String>>() {};
+         assertThat(token.getRawType().equals(List.class), is(true));
+ 
+         TypeToken<String> token2 = new TypeToken<String>() {};
+         assertThat(token2.getRawType().equals(String.class), is(true));
      }
-
-     @DB
-     static interface Dao {
-         @SQL("insert into user(uid) values (:1.b.d)")
-         public int add(A a);
-
-         @SQL("insert into user(uid) values (:1.c.d)")
-         public int add2(A a);
+ 
+     @Test
+     public void testOf() throws Exception {
+         TypeToken<String> token = TypeToken.of(String.class);
+         assertThat(token.getType().equals(String.class), is(true));
+         assertThat(token.getRawType().equals(String.class), is(true));
      }
-
-     @DB
-     @Cache(prefix = "dao2_", expire = Day.class)
-     static interface Dao2 {
-         @SQL("select ... where c in (:1)")
-         public List<A> gets(@CacheBy List<Integer> ids);
+ 
+     @Test
+     public void testResolveType() throws Exception {
+         TypeToken<HashMap<String, Integer>> mapToken = new TypeToken<HashMap<String, Integer>>() {};
+         TypeToken<?> entrySetToken = mapToken.resolveType(Map.class.getMethod("entrySet").getGenericReturnType());
+         assertThat(entrySetToken.toString(), equalTo("java.util.Set<java.util.Map.java.util.Map$Entry<java.lang.String, java.lang.Integer>>"));
      }
-
-     static class A {
-         B b;
-
-         public B getB() {
-             return b;
-         }
+ 
+     @Test
+     public void testGetTypes() throws Exception {
+         TypeToken<HashMap<String,Integer>> t = new TypeToken<HashMap<String, Integer>>() {
+         };
+         Set<TypeToken<?>> types = t.getTypes();
+         assertThat(types.size(), equalTo(6));
+         types.contains(new TypeToken<Map<String, Integer>>() {
+         });
+         types.contains(new TypeToken<HashMap<String, Integer>>() {
+         });
+         types.contains(new TypeToken<AbstractMap<String, Integer>>() {});
+         types.contains(TypeToken.of(Cloneable.class));
+         types.contains(TypeToken.of(Serializable.class));
+         types.contains(TypeToken.of(Object.class));
      }
-
-     static class B {
-         C c;
-
-         public C getC() {
-             return c;
-         }
-     }
-
-     static class C {
-
-     }
-
+ 
  }
