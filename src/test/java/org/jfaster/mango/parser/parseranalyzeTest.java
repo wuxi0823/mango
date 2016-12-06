@@ -31,7 +31,7 @@ public class parseranalyzeTest {
 
   @Test
   public void testBase1() throws Exception {
-    String sql = "select #{:1} from user where id in (:10) and name=:6";
+    String sql = "select #{:1} from user where id in (:2) and name=:2";
     ASTRootNode n = new Parser(sql).parse().init();
     Type listType = new TypeToken<List<Integer>>() {
     }.getType();
