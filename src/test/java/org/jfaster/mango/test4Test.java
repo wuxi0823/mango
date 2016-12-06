@@ -70,19 +70,23 @@ public class test4Test {
     assertThat(boundSql.getSql().toString(), equalTo("select where 1=1 "));
     assertThat(boundSql.getArgs().size(), equalTo(0));
   }
-  @Test
+   @Test
   public void testIfElseIf() throws Exception {
-    String sql = "select where 1=1 #if(:1) and id>:1 #end";
+    String sql = "select where 1=1" +
+        "#if(:1>0)" +
+        " and id>:1" +
+        "#elseif(:1<0)" +
+        " and id<:1" +
+        "#end";
     ASTRootNode n = new Parser(sql).parse().init();
     ParameterContext ctx = getParameterContext(Lists.newArrayList((Type) Integer.class));
     n.checkAndBind(ctx);
     InvocationContext context = DefaultInvocationContext.create();
-    context.addParameter("1", 50);
+    context.addParameter("1", 100);
     n.render(context);
     BoundSql boundSql = context.getBoundSql();
-    assertThat(boundSql.getSql().toString(), equalTo("select where 1=1"));
-    assertThat(boundSql.getArgs().size(), equalTo(0));
-
+    assertThat(boundSql.getSql().toString(), equalTo("select where 1=1 and id>?"));
+    assertThat(boundSql.getArgs(), contains(new Object[]{100}));
   }
 
   @Test
