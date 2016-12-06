@@ -75,7 +75,4 @@ public class parseranalyzeTest {
     assertThat(boundSql.getArgs().size(), equalTo(0));
   }
 
-
-
-
 }
