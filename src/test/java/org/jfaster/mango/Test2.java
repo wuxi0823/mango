@@ -21,7 +21,7 @@ package org.jfaster.mango;
  import static org.hamcrest.Matchers.contains;
  import static org.hamcrest.Matchers.hasSize;
  
- public class test2 {
+ public class Test2 {
 
      private final static DataSource ds = DataSourceConfig.getDataSource();
      private final static Mango mango = Mango.newInstance(ds);
