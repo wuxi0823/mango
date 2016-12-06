@@ -35,7 +35,7 @@ public class parseranalyzeTest {
     ASTRootNode root = new Parser(SQLsentence).parse().init();
     Type listoftype = new TypeToken<List<Integer>>() {
     }.getType();
-    ParameterContext ctx = getParameterContext(Lists.newArrayList(String.class, listType, String.class));
+    ParameterContext ctx = getParameterContext(Lists.newArrayList(String.class, listoftype, String.class));
     root.checkAndBind(ctx);
     InvocationContext context = DefaultInvocationContext.create();
     context.addParameter("1", "id");
