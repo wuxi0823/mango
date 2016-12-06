@@ -39,17 +39,17 @@ public class test4Test {
     n.checkAndBind(ctx);
     InvocationContext context = DefaultInvocationContext.create();
     context.addParameter("1", "id");
-    context.addParameter("2", Arrays.asList(9, 5, 2, 7));
-    context.addParameter("3", "ash");
+    context.addParameter("2", Arrays.asList(1, 2, 3,4));
+    context.addParameter("3", "xi");
     n.render(context);
     BoundSql boundSql = context.getBoundSql();
     assertThat(boundSql.getSql().toString(), equalTo("select id from user where id in (?,?,?,?) and name=?"));
-    assertThat(boundSql.getArgs(), contains(new Object[]{9, 5, 2, 7, "ash"}));
+    assertThat(boundSql.getArgs(), contains(new Object[]{1, 2, 3,4, "xi"}));
   }
 
   @Test
   public void testIf() throws Exception {
-    String sql = "select where 1=1 #if(:1) and id>:1 #end";
+    String sql = "select where 2=2 #if(:2) and id>:2 #end";
     ASTRootNode n = new Parser(sql).parse().init();
     ParameterContext ctx = getParameterContext(Lists.newArrayList((Type) Integer.class));
     n.checkAndBind(ctx);
@@ -57,13 +57,13 @@ public class test4Test {
     context.addParameter("1", 100);
     n.render(context);
     BoundSql boundSql = context.getBoundSql();
-    assertThat(boundSql.getSql().toString(), equalTo("select where 1=1  and id>? "));
+    assertThat(boundSql.getSql().toString(), equalTo("select where 2=2  and id>? "));
     assertThat(boundSql.getArgs(), contains(new Object[]{100}));
   }
 
   @Test
   public void testIf2() throws Exception {
-    String sql = "select where 1=1 #if(!:1) and id>:1 #end";
+    String sql = "select where 1>1 #if(!:1) and id>:1 #end";
     ASTRootNode n = new Parser(sql).parse().init();
     ParameterContext ctx = getParameterContext(Lists.newArrayList((Type) Integer.class));
     n.checkAndBind(ctx);
