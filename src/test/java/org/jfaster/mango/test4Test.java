@@ -82,11 +82,11 @@ public class test4Test {
     ParameterContext ctx = getParameterContext(Lists.newArrayList((Type) Integer.class));
     n.checkAndBind(ctx);
     InvocationContext context = DefaultInvocationContext.create();
-    context.addParameter("1", 30);
+    context.addParameter("1", 100);
     n.render(context);
     BoundSql boundSql = context.getBoundSql();
     assertThat(boundSql.getSql().toString(), equalTo("select where 1=1 and id>?"));
-    assertThat(boundSql.getArgs(), contains(new Object[]{30}));
+    assertThat(boundSql.getArgs(), contains(new Object[]{100}));
   }
   @Test
   public void testIfElseIf2() throws Exception {
