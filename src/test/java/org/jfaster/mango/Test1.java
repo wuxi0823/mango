@@ -12,5 +12,6 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 public class Test1 {
-  ExtendStat a= new ExtendStat();
+    OperatorStat os = new OperatorStat;
+  ExtendStat es = new ExtendStat(os);
 }
