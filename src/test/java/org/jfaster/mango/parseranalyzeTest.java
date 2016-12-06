@@ -27,7 +27,7 @@ import static org.hamcrest.Matchers.hasSize;
 /**
  * @author ash
  */
-public class parseranalyze {
+public class parseranalyzeTest {
 
   @Test
   public void testBase1() throws Exception {
