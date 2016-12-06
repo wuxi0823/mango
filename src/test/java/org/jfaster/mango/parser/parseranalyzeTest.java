@@ -30,21 +30,21 @@ import static org.hamcrest.Matchers.hasSize;
 public class parseranalyzeTest {
 
   @Test
-  public void testBase1() throws Exception {
-    String sql = "select #{:1} from user where id in (:2) and name=:2";
-    ASTRootNode n = new Parser(sql).parse().init();
-    Type listType = new TypeToken<List<Integer>>() {
+  public void maintest() throws Exception {
+    String SQLsentence = "select #{:1} from user where id in (:2) and name=:3";
+    ASTRootNode root = new Parser(SQLsentence).parse().init();
+    Type listoftype = new TypeToken<List<Integer>>() {
     }.getType();
     ParameterContext ctx = getParameterContext(Lists.newArrayList(String.class, listType, String.class));
-    n.checkAndBind(ctx);
+    root.checkAndBind(ctx);
     InvocationContext context = DefaultInvocationContext.create();
     context.addParameter("1", "id");
-    context.addParameter("2", Arrays.asList(9, 5, 2, 7));
-    context.addParameter("3", "ash");
-    n.render(context);
-    BoundSql boundSql = context.getBoundSql();
-    assertThat(boundSql.getSql().toString(), equalTo("select id from user where id in (?,?,?,?) and name=?"));
-    assertThat(boundSql.getArgs(), contains(new Object[]{9, 5, 2, 7, "ash"}));
+    context.addParameter("2", Arrays.asList(1, 2, 3, 4));
+    context.addParameter("3", "xiwu");
+    root.render(context);
+    BoundSql bound = context.getBoundSql();
+    assertThat(bound.getSql().toString(), equalTo("select id from user where id in (?,?,?,?) and name=?"));
+    assertThat(bound.getArgs(), contains(new Object[]{1, 2, 3, 4, "xiwu"}));
   }
 
   @Test
