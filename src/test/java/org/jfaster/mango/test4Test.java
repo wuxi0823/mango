@@ -62,7 +62,7 @@ public class test4Test {
 
   @Test
   public void testIf2() throws Exception {
-    String sql = "select where 1!=1 #if(!:1) and id>:1 #end";
+    String sql = "select where 2=2 #if(!:2) and id>:2 #end";
     ASTRootNode n = new Parser(sql).parse().init();
     ParameterContext ctx = getParameterContext(Lists.newArrayList((Type) Integer.class));
     n.checkAndBind(ctx);
