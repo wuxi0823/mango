@@ -26,7 +26,7 @@ conn.close();
 @Test
 public void testByteInfo() {
 byte[] arrayByte = new byte[]{1, 2, 3};
-byte singleByte = 10;
+byte singleByte = 8;
 dao.insert(arrayByte, singleByte);
 int id = dao.insert(arrayByte, singleByte);
 assertThat(Arrays.toString(dao.getArrayByte(id)), equalTo(Arrays.toString(arrayByte)));
