@@ -1,16 +1,6 @@
- package org.jfaster.mango.plugin.stats;
-import org.jfaster.mango.annotation.DB;
-import org.jfaster.mango.annotation.SQL;
-import org.jfaster.mango.annotation.Sharding;
-import org.jfaster.mango.sharding.NotUseTableShardingStrategy;
-import org.jfaster.mango.stat.OperatorStat;
-import org.jfaster.mango.util.Strings;
-import org.jfaster.mango.util.ToStringHelper;
+package org.jfaster.mango.stat;
 
-import java.lang.reflect.Method;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
+import org.jfaster.mango.util.jdbc.OperatorType;
 public class Test1 {
   @Test
   public void test() throws Exception {
@@ -28,3 +18,4 @@ public class Test1 {
   OperatorStat operatorStat = stat.toOperatorStat();
 }
 }
+
