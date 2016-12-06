@@ -74,5 +74,17 @@ public class parseranalyzeTest {
     assertThat(boundSql.getSql().toString(), equalTo("select where 1=1 "));
     assertThat(boundSql.getArgs().size(), equalTo(0));
   }
+  private ParameterContext getParameterContext(List<Type> types) {
+    List<Annotation> empty = Collections.emptyList();
+    List<ParameterDescriptor> pds = Lists.newArrayList();
+    int pos = 0;
+    for (Type type : types) {
+      ParameterDescriptor pd = ParameterDescriptor.create(pos++, type, empty, String.valueOf(pos));
+      pds.add(pd);
+    }
+    ParameterContext ctx = DefaultParameterContext.create(pds);
+    return ctx;
+  }
+
 
 }
