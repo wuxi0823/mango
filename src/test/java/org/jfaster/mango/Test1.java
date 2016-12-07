@@ -19,7 +19,7 @@ public class Test1 {
     MetaStat meta = ST.getMetaStat();
     meta.setUseMultipleKeys(true);
     meta.setCacheNullObject(true);
-    meta.setMethod(m);
+//     meta.setMethod(m);
     meta.setOperatorType(OperatorType.UPDATE);
     meta.setCacheable(true);
 
