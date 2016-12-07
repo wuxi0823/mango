@@ -13,42 +13,40 @@ public class Test1 {
 
   @Test
   public void test() throws Exception {
-    Method m = CombinedStatTest.class.getDeclaredMethod("test");
-    assertThat(m, notNullValue());
+    
+    CombinedStat ST = CombinedStat.create();
 
-    CombinedStat stat = CombinedStat.create();
+    MetaStat meta = ST.getMetaStat();
+    meta.setUseMultipleKeys(true);
+    meta.setCacheNullObject(true);
+    meta.setMethod(m);
+    meta.setOperatorType(OperatorType.UPDATE);
+    meta.setCacheable(true);
 
-    MetaStat metaStat = stat.getMetaStat();
-    metaStat.setMethod(m);
-    metaStat.setOperatorType(OperatorType.UPDATE);
-    metaStat.setCacheable(true);
-    metaStat.setUseMultipleKeys(true);
-    metaStat.setCacheNullObject(true);
+    InitStat inist = ST.getInitStat();
+    inist.recordInit(500);
 
-    InitStat initStat = stat.getInitStat();
-    initStat.recordInit(500);
+    ExecuteStat execute = ST.getExecuteStat();
+    OneExecuteStat oneex = OneExecuteStat.create();
+    oneex.recordDatabaseExecuteSuccess(17);
+    oneex.recordDatabaseExecuteException(16);
+    oneex.recordHits(15);
+    oneex.recordMisses(14);
+    oneex.recordCacheGetSuccess(13);
+    oneex.recordCacheGetException(12);
+    oneex.recordCacheGetBulkSuccess(11);
+    oneex.recordCacheGetBulkException(10);
+    oneex.recordCacheSetSuccess(9);
+    oneex.recordCacheSetException(8);
+    oneex.recordCacheAddSuccess(7);
+    oneex.recordCacheAddException(6);
+    oneex.recordCacheDeleteSuccess(5);
+    oneex.recordCacheDeleteException(4);
+    oneex.recordCacheBatchDeleteSuccess(3);
+    oneex.recordCacheBatchDeleteException(2);
+    execute.accumulate(oneex);
 
-    ExecuteStat executeStat = stat.getExecuteStat();
-    OneExecuteStat oneExecuteStat = OneExecuteStat.create();
-    oneExecuteStat.recordDatabaseExecuteSuccess(17);
-    oneExecuteStat.recordDatabaseExecuteException(16);
-    oneExecuteStat.recordHits(15);
-    oneExecuteStat.recordMisses(14);
-    oneExecuteStat.recordCacheGetSuccess(13);
-    oneExecuteStat.recordCacheGetException(12);
-    oneExecuteStat.recordCacheGetBulkSuccess(11);
-    oneExecuteStat.recordCacheGetBulkException(10);
-    oneExecuteStat.recordCacheSetSuccess(9);
-    oneExecuteStat.recordCacheSetException(8);
-    oneExecuteStat.recordCacheAddSuccess(7);
-    oneExecuteStat.recordCacheAddException(6);
-    oneExecuteStat.recordCacheDeleteSuccess(5);
-    oneExecuteStat.recordCacheDeleteException(4);
-    oneExecuteStat.recordCacheBatchDeleteSuccess(3);
-    oneExecuteStat.recordCacheBatchDeleteException(2);
-    executeStat.accumulate(oneExecuteStat);
-
-    OperatorStat operatorStat = stat.toOperatorStat();
+    OperatorStat operatorStat = ST.toOperatorStat();
 
   }
 
