@@ -227,8 +227,7 @@
                     <excludes>
                         <exclude>**/parser/JJTParserState.class</exclude>
                         <exclude>**/parser/ParseException.class</exclude>
-                        <exclude>**/parser/Parser.class</exclude>
-                        <exclude>**/parser/ParserTokenManager.class</exclude>
+                      
                         <exclude>**/parser/SimpleCharStream.class</exclude>
                         <exclude>**/parser/SimpleNode.class</exclude>
                         <exclude>**/parser/Token.class</exclude>
