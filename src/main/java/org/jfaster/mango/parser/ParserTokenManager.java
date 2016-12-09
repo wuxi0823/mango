@@ -922,7 +922,7 @@ private int jjMoveStringLiteralDfa4_1(long old0, long active0)
    }
    return jjStartNfa_1(3, active0);
 }
-private int jjMoveNfa_1(int startState, int curPos)
+public int jjMoveNfa_1(int startState, int curPos)
 {
    int startsAt = 0;
    jjnewStateCnt = 45;
